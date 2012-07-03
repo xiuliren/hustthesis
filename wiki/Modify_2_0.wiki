@@ -3,17 +3,6 @@
 
 = Introduction =
 
-Add your content here.
-
-
-= Details =
-
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
-
-
 发信人: lianan (还在留念08的时候，09已经离开), 信区: PhD
 标  题: LaTeX撰写博士学位论文
 发信站: 武汉白云黄鹤站 (2011年03月15日11:32:24 星期二), Web发表
