@@ -1,4 +1,4 @@
-#summary One-sentence summary of this page.
+#summary 修改2.0版本，满足目前学校格式要求的方法（2012）
 #labels Featured,Phase-Design
 
 = Introduction =
