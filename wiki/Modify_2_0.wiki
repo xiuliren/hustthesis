@@ -1,4 +1,4 @@
-#summary 修改2.0版本，满足目前学校格式要求的方法（2012）
+#summary 修改2.0版本，满足目前学校格式要求的方法（2012）,by lianan
 #labels Featured,Phase-Design
 
 = Introduction =
