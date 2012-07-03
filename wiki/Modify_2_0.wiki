@@ -1,0 +1,314 @@
+#summary One-sentence summary of this page.
+#labels Featured,Phase-Design
+
+= Introduction =
+
+Add your content here.
+
+
+= Details =
+
+Add your content here.  Format your content with:
+  * Text in *bold* or _italic_
+  * Headings, paragraphs, and lists
+  * Automatic links to other wiki pages
+
+
+发信人: lianan (还在留念08的时候，09已经离开), 信区: PhD
+标  题: LaTeX撰写博士学位论文
+发信站: 武汉白云黄鹤站 (2011年03月15日11:32:24 星期二), Web发表
+
+转自自己博客，记录了用LaTeX完成博士学位论文的一点心得，希望对后来人有帮助。有什
+么疑问，也愿意和大家交流。email为anpig.li AT gmail DOT com。
+另外，我的一些改动是根据导师的要求来做的，可能各个实验室会有不同。
+
+*********
+昨天，终于收到了图书馆发来的确认信，我的博士论文电子版通过了审核。在此之前，打
+印版早就上交到了学校，一切顺利。这个时候，自己终于有想法来写这么一个日志，将用
+LaTeX撰写博士学位论文的经验分享给大家，特别是华中科技大学的师弟师妹们。
+　　LaTeX学起来并不难，一些基础的资料，如《一份不太简短的LaTeX2ε介绍》。假设你
+已经认真看过了上面这个简单的教程，再加上这篇文档，相信你能够写出一篇漂亮的华中
+科技大学博士学位论文！
+首先感谢刘慧侃老兄，建立了华工的LaTeX博士学位论文模板，我就是从这个模板开始写作
+。目前最新的版本是2.0，可以从SF下载。模板的使用教程可以在打包的下载文件中找到，
+就不再复述，而仅列出在此模板基础上的一些改变或经验：
+
+　　1.对cls文件的修改
+　　（1）搜索“\@hangfrom{#1~~}#2”，将此句用“%”符号注释，防止出现模板默认的
+图注悬挂缩进。进行这个设置，是为中英文双语的图注做准备。如果不希望加入英文图注
+，可以不进行此修改。
+　　（2）搜索“设置标题前后间距”，将接下来的两句都注释掉，即不再设置前后间距。
+将统一的间距设置取消，同样是为中英文双语图注做准备。否则可不做修改。
+　　（3）搜索“\renewcommand\normalsize{\fontsize{12pt}{18pt}\selectfont}”，将
+“18pt”改成“21pt”，即增加行间距。我赶紧这样更美观~可不是为了增加页数啊-_-!
+
+　　（4）搜索“\setlength{\parskip}{0pt plus2pt minus1pt}”，将其改为“\setlen
+gth{\parskip}{0.5\baselineskip}”，目的是增加段落间的距离，差不多等同于word中段
+前空0.5行的设置。
+　　（5）搜索“\parbox[t][5.7cm][t]{\textwidth}”，将其中的“5.7cm”改为“4.5c
+m”。否则英文封面将会被排成2页。
+
+　　2.对cpx文件的修改
+　　（1）搜索“\newcommand{\abstractname}{摘\hspace{1em}要”，在“要”字后加“
+\footnote{本课题得***}”，即在摘要标题中加入资助信息。本来想把这个加在acknowle
+dgement里面，但老板非要我加在摘要中，只有出此下策。
+　　（2）搜索“\newcommand{\HUST@denotation@name}{符号对照表}”，将“符号对照表
+”换成“英文缩写名称一览表”——这又是老板的主意。
+　　（3）搜索“\newcommand{\HUST@publication@title}{攻读学位期间发表的学术论文
+}”，将“攻读学位期间发表的学术论文”替换成“攻读学位期间的主要成果和奖励”——
+号称所获奖励、专利和软件著作权都是可以写上去的。
+
+　　3.对cover.tex文件的修改
+　　（1）搜索“\eassosupervisor”，在该命令之后插入 “\edate{December, 2010}”
+。如果不加入这个命令，自动生成的命令将是编译成PDF的时间，而不是答辩时间。
+
+　　4.对main.tex的修改
+　　（1）增加“\usepackage{makecell}”。目的是在表格的单元格中建立cell，方便换
+行。
+　　（2）增加“\usepackage{afterpage}”。目的是立即处理浮动对象。如果图片太多，
+有必要使用这个命令，防止图片与引用它的正文距离太远。
+　　（3）增加“\usepackage{multirow}”。目的是进行复杂的表格排版，具体可以在go
+ogle上检索该宏包的说明。
+　　（4）增加“\usepackage{CJKfntef}”。目的是可以给汉子加下划线。
+　　（5）增加“\usepackage[perpage,symbol*]{footmisc}”。目的是将脚注的正文引用
+处变成“*”号。这里是出于无奈，因为仅仅摘要的脚注使用*号，在“chap01.tex”的一
+开始，需要插入“\renewcommand{\thefootnote}{\arabic{footnote}}”，将脚注符号再
+次换成阿拉伯数字。
+　　（6）“\includeonly{ }”命令的使用。由于整个博士论文很大，为了加快速度，往
+往只编译当前章，比如“\includeonly{data/chap02}”。
+　　（7）搜索“\frontmatter”，在其后面插入“\pagenumbering{Roman}”，确保正文
+之前，使用大写罗马数字作为页码。
+　　（8）“\newpage”命令的使用。每一章（包括中英文摘要、目录、致谢、参考文献等
+）的第一页的页码都应该是奇数。所以在全文撰写后，需要用这个命令增加空白页。
+
+　　5.图形的插入
+　　图形的插入本来很简单，但由于老板要求加入中英文图注，所以就麻烦了。上网找了
+不少解决方案都不行，所以就自己摸索了。这个方法需要预先在cls文件中进行两处修改，
+去除默认的格式设计。
+　　（1）插入简单的图（只有一行图注）
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=10cm]{Fig_ch01_neuron.eps}
+\caption{神经元的典型结构（引自维基百科）}
+{\dawu Fig.\thefigure~~The typical structure of neurons (from Wikipedia)}
+\label{fig:ch1:neuron}
+\end{figure}
+
+　　“\caption”命令给出中文图注
+　　“{\dawu Fig.\thefigure~~***}”中给出英文图注。其中，“\dawu”指定英文字号
+为大五，否则中英文字号会不一致；“Fig.\thefigure”给出当前figure的编号，比如Fi
+g.2.1。
+
+　　（2）插入复杂的图（有多行图注）
+\begin{figure}[ht]
+\centering
+\includegraphics[width=15cm]{Fig_ch03_ccdtditest1.eps}
+\caption{TDI-CCD 对消除运动模糊失真的测试。}
+{\dawu （A）微电路板的成像结果。（B）灰度分布曲线，其位置已用虚线标注在（A）图
+中。}\\
+{\dawu Fig.\thefigure~~Performance test of TDI-CCD for eliminating the distort
+ion resulting from motion blur.}\\
+{\dawu (A) Imaging result of micro circuit board. (B) Profiles of pixel value 
+along the dashed lines in (A).}
+\label{fig:ch3:ccdtditest1}
+\end{figure}
+
+　　这幅图的图注过长，很明显会超过一行，所以三次使用了“{\dawu ***}”这个命令。
+在前两个命令后面，还加上了“\\”用于换行。这个方法的缺点是，需要根据实际排版情
+况来寻找断句的地方，常常需要反复编译，以获得最佳的效果。一种有效降低劳动量的方
+法是尽量减少图注中的字数，复杂的内容都放在正文中去解释。
+
+　　（3）图的准备
+　　默认的编译过程可以在“msbuild.bat”文件中找到，编译其实就是去执行这个批处理
+文件。编译有6步，即“latex ->bibtex->latex->gbk2uni->latex->dvipdfm”。所以，先
+是生成DVI文件，再转成PDF，需要使用eps格式的图片。
+　　我博士论文中所有的图都是用MS Visio画，或者排版。Visio中并不能直接导出eps图
+像，有两种方法可以做到这一点：（a）先打印成pdf，然后在adobe acrobat中进行裁剪，
+裁剪结果另存为eps；（b）先另存为常用图像格式（比如JPG），然后用adobe acrobat转
+成pdf，最后在导出为eps。在打印pdf或保持成JPG时，一定要注意调整分辨率为150~300D
+PI。主要使用方法a，当图片中出现透明色，就必须使用方法b，因为visio中透明色打印成
+pdf时显示为网格（丑啊）。
+　　事实上，博士学位论文是可以pdfLaTeX编译的，这样可以直接使用JPG图像，感兴趣的
+可以去试试。
+
+　　（4）另外一些经验
+　　对于博士学位论文排版，非常害怕出现很大的图，这样会严重影响自动排版的质量。
+如果这种图的使用无法避免，就尽量用一些命令去控制，比如“\afterpage”。否则，会
+出现每一章的末尾堆上很多图，图与引用位置间的距离太远（一般控制在同一页，或相邻
+页）。
+　　推荐使用微软雅黑作为绘图时的字体，效果最好。
+　　为了保证所有图中的线宽和字号统一，需要特别注意。对于Visio绘图，将图插入论文
+中后不断调整直到得到合适宽度。记下这个宽度，然后回到Visio中，将图中元件组合，再
+缩放该图到此宽度。这样获得的图，不会在PDF发生放大或缩小，字号和线框当然会统一。
+
+　　Matlab中获得的线图可以保存为图元文件（矢量图），然后再插入Visio中编辑。
+　　对于照片（显微镜图像或系统实物图等），尽量将图像的对比度调高一些，否则打印
+出来后看不清楚。
+　　普通的图做成灰度图，好的实现结果做成彩图，尽量放在连续的几页中。因为，可以
+把这些好结果打印成彩色，彩打很贵，而且能省则省。
+
+　　6.表格插入
+　　举一个例子如下：
+\begin{table}[!htbp]
+  \centering
+  \caption{\label{tab:methods}鼠脑成像方法}
+  {Tab.\thetable~~Brain imaging methods\vspace{11pt}}
+    \begin{tabular}{cccccccc}
+      \toprule
+      \multirow{2}{*}{数据获取方法} & \multirow{2}{*}{成像对象} & \multicolumn
+{2}{c}{分辨率 ($\mu{}m$)} & \multirow{2}{*}{样本尺寸} & \multirow{2}{*}{\makec
+ell{数据\\配准}} & \multirow{2}{*}{\makecell{自动化\\程度}} & \multirow{2}{*}{
+成像方式}\\ \cline{3-4}
+       &  & 横向 & 轴向 &  &  &  &\\
+      \midrule
+      \makecell*{Allen 脑图谱\\获取方法\cite{Lein2007}} & 切片 & 0.2 & 40 & 全
+脑 & 否 & 手动 & 明场/荧光\\
+      \makecell*{ATomo\cite{Micheva2007}} & 切片 & 0.2 & 0.05 & 脑块 & 否 & 半
+自动 & \makecell*{明场/荧光/\\电镜}\\
+      \makecell*{数字鼠数据\\获取方法\cite{Bai2006}} & 切片 & 0.5 & 200 & 全脑
+ & 是 & 自动 & 明场/荧光\\
+      \makecell*{TPTC\cite{Ragan2007}} & 浅层 & 0.3 & 0.6 & $>$6 $mm$ & 是 & 自
+动 & 荧光\\
+      \makecell*{AOH\cite{Tsai2003}} & 浅层 & 0.3 & 1 & 脑块 & 是 & 自动 & 荧光
+\\
+      \makecell*{UM\cite{Dodt2007}} & 浅层 & 10 & $>$10 & 全脑 & 是 & 自动 & 荧
+光\\
+      \makecell*{OPT\cite{Sharpe2004}} & 透明完整样本 & 5--10 & 5--10 & 1--10 
+$mm$ & 是 & 自动 & 明场/荧光\\
+      \makecell*{MRI\cite{Dorr2008}} & 完整样本 & 32 & 32 & 全脑 & 是 & 自动 &
+ --- \\
+      \bottomrule
+    \end{tabular}
+\end{table}
+
+　　其中，“\caption{}”中为中文表注，“{Tab.\thetable~~***\vspace{11pt}}”为英
+文表注。11pt的纵向距离是必要的，否则英文图注和表格间的距离太近，影响美观。
+　　“\multirow”和“\multicolumn”命令可以合并单元格，google一下就清楚用法了。
+
+　　“\toprule”和“\bottomrule”画粗线，“\midrule”画细线，即所谓的三线表。
+
+　　“\makecell*{string1\\string}”命令构建一个cell，方便内容在单元格内换行，换
+行的位置用“\\”命令控制。“\makecell”命令对于排版很宽的表格非常有用。
+　　排版的结果如下：
+
+
+　　7.参考文献插入
+　　我的做法是Endnote做文献管理。在Endnote中编辑好所有文献，保证文献信息的统一
+。我的文献风格如下：
+[5] Snyder E Y, Yoon C, Flax J D, et al. Multipotent neural precursors can dif
+ferentiate toward replacement of neurons undergoing targeted apoptotic degener
+ation in adult mouse neocortex. P Natl Acad Sci USA, 1997, 94(21):11663–11668
+.
+　　作者名字缩写为Snyder E Y，仅列出3人。期刊名使用ISO标准的缩写，比如P Natl A
+cad Sci USA。然后，还要给每篇文献加入唯一的Label，比如上面这篇文献的Label为Sny
+der1997。最后，建议删除endnote中记录的无关内容，比如abstract、note、keywords、
+address等。
+　　LaTeX使用BibTeX管理文献，endnote提供了可以输出为BibTeX格式的style，称为Bib
+TeX Export。输出结果可以直接粘贴到“\ref\refs.bib”文件中，比如：
+@article{Snyder1997,
+   author = {Snyder, E. Y. and Yoon, C. and Flax, J. D. and Macklis, J. D.},
+
+   title = {Multipotent neural precursors can differentiate toward replacement
+ of neurons undergoing targeted apoptotic degeneration in adult mouse neocorte
+x},
+   journal = {P Natl Acad Sci USA},
+   volume = {94},
+   number = {21},
+   pages = {11663-11668},
+   year = {1997}
+}
+
+　　如果引用的位置为网页，可以直接在bib文件中插入以下类似内容：
+@MISC{wwwbrainmap,
+  note = {http://www.brain-map.org},
+}
+
+　　8. 攻读学位期间的主要成果和奖励
+　　对于不仅有论文的同志，可以按照下面这个格式来写：
+\begin{publications}
+\item “高分辨数字人体三维结构数据集的构建与可视化”获得~2006 年湖北省科技进步
+奖一等奖. 主要完成人: 骆清铭, 刘谦, 龚辉, 鲁强, 曾绍群, \CJKunderline{李安安},
+ 徐国栋, 陈华, 韩道, 张杰, 熊小飞.\\
+\item ***
+\begin{center}
+\textbf{\sihao 发表的学术论文\\}
+\end{center}
+\setcounter{enumi}{0}
+\item \CJKunderline{Li A A}, Gong H, Zhang B, Wang Q D, Yan C, Wu J P, Liu Q, 
+Zeng S Q, Luo Q M. Micro-optical sectioning tomography to obtain a high-resolu
+tion atlas of the mouse brain. Science, 2010, 330(6009):1404-1408.（第一单位：
+华中科技大学）
+\item ***
+\begin{center}
+\textbf{\sihao 申请或授权的专利和软件著作权\\}
+\end{center}
+\setcounter{enumi}{0}
+\item 骆清铭, 张斌, \CJKunderline{李安安}, 龚辉, 王冰然. 一种小动物全脑标本的制
+备方法, 发明专利申请号~200810306435.3.
+\item ***
+\end{publications}
+
+　　说明：论文的格式和“参考文献”的格式基本一致，但有必要列出所有作者名单。
+
+
+　　9.盲审
+　　盲审很无聊，不仅评审人很容易判断论文的作者是谁，而且评审人的名字需要填在毕
+业前的一大堆表格中。不管怎样，需要按照形式来。我们最好重新建立 “coverM.tex”和
+“publicationsM.tex”两个文件，分别临时代替原文件。然后，去除所有出现的作者信息
+，导师信息。说白了就是一个空白的封面，以及没有作者信息的成果列表。另外，在盲审
+版本中不需要插入“致谢”。
+　　盲审需要打印3本，交给研究生教务员即可。然后，就祈祷各位评审人动作快一点，快
+递别出啥差错。
+
+　　10.其他注意事项
+　　（1）中英文间的空格
+　　比如这么一段：“由表~\ref{tab:aerotech} 可知，$X$ 轴的运动行程最长，便于执
+行主切削运动，相比之下，$Y$ 轴和~$Z$ 轴的运动行程只有厘米量级。”
+　　为了排版美观，中英文间应该有空格，英文部分与前面的中文间要加入“~”符号，与
+后面的中文间要加入一个真的空格。在这里，英文是所有阿拉伯数字、希腊字母、公式、
+拉丁字母等的统称，即凡是汉字以外的字符。但是，中文标点符号与这些元素间是不需要
+增加额外空格的。
+　　（2）单位的特殊格式
+对于单位、坐标轴等信息，我习惯用公式环境。比如微米写成“$\mu{}m$”，X轴写成“$
+X$ 轴”。公式环境能够让这些元素在正文中突出显示，更加美观。
+　　（3）双引号
+我过去喜欢用``’’这四个半角字符实现双引号，但是它的效果没有直接使用“”这中文
+符号漂亮，感兴趣的可以去试一试。
+　　（4）标题深度
+虽然学校允许出现“2.1.3.1”这样的四级标题，但是还是建议标题只使用到三级，即不允
+许出现“\subsubsection{}”这个命令。如果需要在三级标题下增加分割，建议使用“（
+1）”罗列，代替四级标题。
+
+　　11.打印最终版本
+　　结合盲审和答辩时反馈回来的意见，论文一般还需要修改。修改后，就要拿去打印了
+，这时候还是需要做一些事情。
+　　（1）中文的封面不用担心，因为需要由打印人员临时制作彩色的封面。英文封面只占
+半页纸，背面应该保持空白。
+　　（2）中文摘要、英文摘要、目录、缩写表、正文的每一章、致谢、参考文献、成果这
+8个部分的第一页都应该位于奇数页，也就是打开一本书的右侧。如果落在了偶数页码，就
+在“main.tex”的相应位置加上一个“\newpage{}~”命令，注意“~”符号是必须的，这
+样可以额外增加一个空白页。
+　　（3）需要准备两个版本的PDF，即页眉版和无页眉版。页眉就是每一页上面那两个横
+杠，以及“华中科技大学博士学位论文”这几个字。页眉版本打印时用普通的纸张，被作
+为博士学位论文的复印版本。无页眉版本打印时需要使用特殊的纸张，带所谓的“红头”
+，作为博士论文的原版，要放在学校图书馆收藏。我们可以很容易的切换两种版本的编译
+，当“main.tex”中的“\documentclass[] {HUSTPHDthesis}”中包含“finalformat”选
+项时，获得是无页眉版本，否则为页眉版本。
+　　（4）制作成PDF后，应该仔细检查，确认无误后拿去打印。虽然学校集贸市场旁边的
+论文打印中心很贵，但质量绝对是最好的。而且，结账的时候签实验室的单即可，不用付
+现金。一般打印7本，1本原版（红头）和3本交到学院，2本交给实验室（gong），自己再
+留一本。
+
+　　12.没有解决的问题
+　　有些问题我一直没有解决，因为不影响大局，也就没有再花时间去折腾。包括：
+　　（1）表格和图片浮动体内无法增加脚注
+　　（2）visio打印成PDF时，透明色无法正确显示
+　　（3）在“攻读学位期间的主要成果和奖励”中，“\begin{publications}”后必须要
+跟“\item”，否者会出错，这使得“所获奖励”小标题无法加入。
+　　（4）无法计算文章字数。
+
+
+--
+奥斯特洛夫斯基想过没有，保尔年轻时的梦想到底是什么
+纸笔只能记录逝去的历史，而未来要凭梦想和奋斗去创造
+※ 来源:·武汉白云黄鹤站 bbs.whnet.edu.cn·
